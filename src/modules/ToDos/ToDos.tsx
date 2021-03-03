@@ -9,10 +9,9 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import getToDos, { ApiToDos } from "../../services/getToDos";
-
 import { useAsync } from "react-async-hook";
 import { Typography } from "@material-ui/core";
-
+import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
 interface Column {
   id: "userId" | "id" | "title" | "completed";
   label: string;
@@ -49,6 +48,11 @@ const useStyles = makeStyles({
   container: {
     maxHeight: 440,
   },
+  loading: {
+    position: "absolute",
+    right: "50%",
+    bottom: "50%",
+  },
 });
 
 const ToDos: React.FC = () => {
@@ -79,7 +83,12 @@ const ToDos: React.FC = () => {
   };
 
   return (
-    <>
+    loadToDos.loading ? (
+      <div className={classes.loading}>
+        <CircularProgress />
+      </div>
+    ) : (
+      <>
       <Typography variant="h5" align="center" style={{ marginBottom: "24px" }}>
         Lista de Álbuns
       </Typography>
@@ -132,7 +141,8 @@ const ToDos: React.FC = () => {
           labelRowsPerPage={"Linhas por página"}
         />
       </Paper>
-    </>
+      </>
+    )
   );
 };
 

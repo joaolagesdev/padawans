@@ -9,10 +9,9 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import getPosts, { ApiPosts } from "../../services/getPosts";
-
+import CircularProgress from "@material-ui/core/CircularProgress";
 import { useAsync } from "react-async-hook";
 import { Typography } from "@material-ui/core";
-
 interface Column {
   id: "userId" | "title" | "body";
   label: string;
@@ -38,6 +37,11 @@ const useStyles = makeStyles({
   },
   container: {
     maxHeight: 440,
+  },
+  loading: {
+    position: "absolute",
+    right: "50%",
+    bottom: "50%",
   },
 });
 
@@ -70,6 +74,11 @@ const Posts: React.FC = () => {
 
   
   return (
+    loadPosts.loading ? (
+      <div className={classes.loading}>
+        <CircularProgress />
+      </div>
+    ) : (
     <>
     <Typography variant="h5" align="center" style={{marginBottom: "24px"}}>
     Lista de Postagens
@@ -123,6 +132,7 @@ const Posts: React.FC = () => {
       />
     </Paper>
     </>
+    )
   );
 };
 

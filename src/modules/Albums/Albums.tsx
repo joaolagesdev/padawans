@@ -8,11 +8,10 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import getAlbums, { ApiAlbums } from "../../services/getAlbums";
-
 import { useAsync } from "react-async-hook";
 import { Typography } from "@material-ui/core";
-
 interface Column {
   id: "userId" | "id" | "title";
   label: string;
@@ -44,6 +43,11 @@ const useStyles = makeStyles({
   container: {
     maxHeight: 440,
   },
+  loading: {
+    position: "absolute",
+    right: "50%",
+    bottom: "50%",
+  },
 });
 
 const Albums: React.FC = () => {
@@ -74,7 +78,12 @@ const Albums: React.FC = () => {
   };
 
   return (
-    <>
+    loadAlbums.loading ? (
+      <div className={classes.loading}>
+        <CircularProgress />
+      </div>
+    ) : (
+      <>
       <Typography variant="h5" align="center" style={{ marginBottom: "24px" }}>
         Lista de Álbuns
       </Typography>
@@ -126,7 +135,8 @@ const Albums: React.FC = () => {
           labelRowsPerPage={"Linhas por página"}
         />
       </Paper>
-    </>
+      </>
+    )
   );
 };
 
