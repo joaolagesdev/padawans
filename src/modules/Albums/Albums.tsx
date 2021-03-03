@@ -105,11 +105,11 @@ const Albums: React.FC = () => {
             <TableBody>
               {albums
                 ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((l) => {
+                .map((album) => {
                   return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={l.id}>
+                    <TableRow hover role="checkbox" tabIndex={-1} key={album.id}>
                       {columns.map((column) => {
-                        const value = l[column.id];
+                        const value = album[column.id];
                         return (
                           <TableCell key={column.id}>
                             {column.format && typeof value === "number"

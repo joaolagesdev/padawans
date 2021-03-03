@@ -101,11 +101,11 @@ const Posts: React.FC = () => {
           <TableBody>
             {posts
               ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((l) => {
+              .map((post) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={l.id}>
+                  <TableRow hover role="checkbox" tabIndex={-1} key={post.id}>
                     {columns.map((column) => {
-                      const value = l[column.id];
+                      const value = post[column.id];
                       return (
                         <TableCell key={column.id}>
                           {column.format && typeof value === "number"

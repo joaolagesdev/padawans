@@ -27,12 +27,14 @@ const columns: Column[] = [
     minWidth: 100,
     format: (value: number) => value.toLocaleString("en-US"),
   },
+
   {
     id: "id",
     label: "Id da Tarefa",
     minWidth: 100,
     format: (value: number) => value.toLocaleString("en-US"),
   },
+
   { id: "title", label: "Título da Tarefa", minWidth: 150 },
   {
     id: "completed",
@@ -82,15 +84,14 @@ const ToDos: React.FC = () => {
     setPage(newPage);
   };
 
-  return (
-    loadToDos.loading ? (
-      <div className={classes.loading}>
-        <CircularProgress />
-      </div>
-    ) : (
-      <>
+  return loadToDos.loading ? (
+    <div className={classes.loading}>
+      <CircularProgress />
+    </div>
+  ) : (
+    <>
       <Typography variant="h5" align="center" style={{ marginBottom: "24px" }}>
-        Lista de Álbuns
+        Lista de Tarefas
       </Typography>
       <Paper className={classes.root}>
         <TableContainer className={classes.container}>
@@ -110,16 +111,16 @@ const ToDos: React.FC = () => {
             <TableBody>
               {toDos
                 ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((l) => {
+                .map((todo) => {
                   return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={l.id}>
+                    <TableRow hover role="checkbox" tabIndex={-1} key={todo.id}>
                       {columns.map((column) => {
-                        const value = l[column.id];
+                        const value = todo[column.id];
                         return (
                           <TableCell key={column.id}>
                             {column.format && typeof value === "number"
                               ? column.format(value)
-                              : value
+                              : column.id === 'completed' ? (value ? "Completa" : "Incompleta"): value
                             }
                           </TableCell>
                         );
@@ -141,8 +142,7 @@ const ToDos: React.FC = () => {
           labelRowsPerPage={"Linhas por página"}
         />
       </Paper>
-      </>
-    )
+    </>
   );
 };
 
